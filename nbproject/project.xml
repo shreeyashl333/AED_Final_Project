@@ -3,7 +3,7 @@
     <type>org.netbeans.modules.java.j2seproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
-            <name>HappyPaws</name>
+            <name>PetShelter</name>
             <explicit-platform explicit-source-supported="true"/>
             <source-roots>
                 <root id="src.dir"/>
@@ -13,7 +13,7 @@
             </test-roots>
         </data>
         <libraries xmlns="http://www.netbeans.org/ns/ant-project-libraries/1">
-            <definitions>D:\jdk1.8.0_341\lib\nblibraries.properties</definitions>
+            <definitions>/Users/chaitanya/Desktop/jdk1.8.0_202.jdk/nblibraries.properties</definitions>
         </libraries>
     </configuration>
 </project>

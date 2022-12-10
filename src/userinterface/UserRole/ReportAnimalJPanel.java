@@ -1,0 +1,608 @@
+/*
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
+package userinterface.UserRole;
+
+import Business.DB4OUtil.DB4OUtil;
+import Business.POJO.Users;
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise.EnterpriseType;
+import Business.Network.Network;
+import Business.Regex.Vald;
+import Business.WorkQueue.ReportStrayAnimalRequest;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
+import javax.swing.event.MouseInputListener;
+import org.apache.log4j.Logger;
+import org.jxmapviewer.OSMTileFactoryInfo;
+import org.jxmapviewer.input.PanMouseInputListener;
+import org.jxmapviewer.input.ZoomMouseWheelListenerCenter;
+import org.jxmapviewer.viewer.DefaultTileFactory;
+import org.jxmapviewer.viewer.GeoPosition;
+
+
+
+import static com.teamdev.jxbrowser.engine.RenderingMode.*;
+ 
+import com.teamdev.jxbrowser.browser.Browser;
+import com.teamdev.jxbrowser.engine.Engine;
+import com.teamdev.jxbrowser.engine.EngineOptions;
+
+
+import com.teamdev.jxbrowser.view.swing.BrowserView;
+ 
+import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.file.Paths;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import org.apache.commons.httpclient.URIException;
+import org.apache.commons.httpclient.util.URIUtil;
+import org.jxmapviewer.viewer.TileFactoryInfo;
+
+
+
+/**
+ *
+ * @author rutuj
+ */
+public class ReportAnimalJPanel extends javax.swing.JPanel {
+    
+    /**
+     * Creates new form ReportAnimalJPanel
+     */
+    private JPanel userProcessContainer;
+    private Users users;
+    private EcoSystem business;
+    private Network currNetwork;
+    Browser browser;
+
+    private Vald vald= Vald.getInstance();
+    private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
+    private final Logger logger = Logger.getLogger(this.getClass());
+    private static final int MIN_ZOOM = 0;
+    private static final int MAX_ZOOM = 21;
+    private static final String setMarkerScript =
+            "var myLatlng = new google.maps.LatLng(48.4431727,23.0488126);\n" +
+                    "var marker = new google.maps.Marker({\n" +
+                    "    position: myLatlng,\n" +
+                    "    map: map,\n" +
+                    "    title: 'Hello World!'\n" +
+                    "});";
+    
+        private static int zoomValue = 4;
+
+    public ReportAnimalJPanel(JPanel userProcessContainer, Users users, EcoSystem business) throws MalformedURLException, URIException, IOException {
+        initComponents();
+        
+        
+        this.userProcessContainer = userProcessContainer;
+        this.users = users;
+        this.business = business;
+        business.getIdGenInstance().getReqId();
+        reportIDTextField.setText(String.valueOf(business.getIdGenInstance().getReqId()));
+
+        //browser = new Browser();
+        
+        
+        //browser.navigation().loadUrl("https://html5test.com");
+        
+        
+        /*if(addressTextField.getText() != null)
+        {
+            String url="https://www.google.com/maps/search/?api=1&query="+addressTextField.getText();
+            browser.navigation().loadUrl(url);
+        
+        
+          
+
+
+       /* jInternalFrame2.add(browserView, BorderLayout.CENTER);
+        browserView.setSize(680,840);
+        jInternalFrame2.setSize(680, 840);
+        jInternalFrame2.setVisible(true);
+        browserView.setVisible(true);
+        browserView.setEnabled(false);
+        
+*/
+           
+
+        
+        //String url="https://www.google.com/maps/search/?api=1&query="+addressTextField.getText();
+       
+
+
+        
+       
+       
+        
+        populateComboBox();
+        
+       logger.info(users.getName() + " logged into Report Animal Panel");
+
+        
+
+        
+        
+    }
+ 
+    
+        //BrowserView browserView = new BrowserView(browser);
+       /* jInternalFrame1.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        jInternalFrame1.add(browserView, BorderLayout.CENTER);
+        browserView.setSize(645,436);
+        jInternalFrame1.setSize(700, 800);
+        jInternalFrame1.setVisible(true);
+        browserView.setVisible(true);
+        browserView.setEnabled(false);*/
+       
+
+       
+       
+    
+    
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        reportIDTextField = new javax.swing.JTextField();
+        addressTextField = new javax.swing.JTextField();
+        zipTextField = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        commentsTextArea = new javax.swing.JTextArea();
+        issueComboBox = new javax.swing.JComboBox<>();
+        submitReportBtn = new javax.swing.JButton();
+        urgencyComboBox = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        animalTypeComboBox = new javax.swing.JComboBox<>();
+        backJButton = new javax.swing.JButton();
+        cityComboBox = new javax.swing.JComboBox<>();
+        Map = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(255, 255, 255));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        jLabel1.setText("Report a Stray Animal");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(449, 16, -1, 40));
+
+        jLabel2.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jLabel2.setText("Report ID:");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 90, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jLabel3.setText("Street Address:");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 183, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jLabel4.setText("City:");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 229, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jLabel6.setText("Zip:");
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 275, -1, -1));
+
+        jLabel7.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jLabel7.setText("Issue:");
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 324, -1, -1));
+
+        jLabel8.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jLabel8.setText("Urgency:");
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 370, -1, -1));
+
+        jLabel9.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jLabel9.setText("Comments:");
+        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 422, -1, -1));
+
+        reportIDTextField.setEditable(false);
+        reportIDTextField.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        reportIDTextField.setEnabled(false);
+        reportIDTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportIDTextFieldActionPerformed(evt);
+            }
+        });
+        add(reportIDTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(176, 87, 202, -1));
+
+        addressTextField.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        addressTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                addressTextFieldFocusLost(evt);
+            }
+        });
+        addressTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addressTextFieldActionPerformed(evt);
+            }
+        });
+        add(addressTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(176, 180, 202, -1));
+
+        zipTextField.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        zipTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zipTextFieldActionPerformed(evt);
+            }
+        });
+        add(zipTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(176, 272, 202, -1));
+
+        commentsTextArea.setColumns(20);
+        commentsTextArea.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        commentsTextArea.setRows(5);
+        jScrollPane1.setViewportView(commentsTextArea);
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(176, 422, 202, -1));
+
+        issueComboBox.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        issueComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Injured", "Seems lost", "Abused", "Not in List" }));
+        issueComboBox.setSelectedIndex(-1);
+        add(issueComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(176, 321, 202, -1));
+
+        submitReportBtn.setBackground(new java.awt.Color(0, 153, 255));
+        submitReportBtn.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        submitReportBtn.setText("Submit");
+        submitReportBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitReportBtnActionPerformed(evt);
+            }
+        });
+        add(submitReportBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 609, 108, 40));
+
+        urgencyComboBox.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        urgencyComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Emergency", "Urgent", "Not Urgent" }));
+        urgencyComboBox.setSelectedIndex(-1);
+        urgencyComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                urgencyComboBoxActionPerformed(evt);
+            }
+        });
+        add(urgencyComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(176, 367, 202, -1));
+
+        jLabel5.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jLabel5.setText("Animal Type: ");
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 142, -1, -1));
+
+        animalTypeComboBox.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        animalTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dog", "Rabbit", "Bird", "Not in List" }));
+        animalTypeComboBox.setSelectedIndex(-1);
+        add(animalTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(176, 139, 202, -1));
+
+        backJButton.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        backJButton.setText("<< Back");
+        backJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backJButtonActionPerformed(evt);
+            }
+        });
+        add(backJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 609, -1, 40));
+
+        cityComboBox.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        cityComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cityComboBoxActionPerformed(evt);
+            }
+        });
+        add(cityComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(176, 226, 202, -1));
+
+        Map.setText("Find Nearest NGO");
+        Map.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MapActionPerformed(evt);
+            }
+        });
+        add(Map, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 220, 150, 40));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/images/homeless.jpg"))); // NOI18N
+        jLabel10.setText("jLabel10");
+        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 850));
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void reportIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportIDTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_reportIDTextFieldActionPerformed
+
+    private void submitReportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitReportBtnActionPerformed
+        // TODO add your handling code here:
+                ReportStrayAnimalRequest report = new ReportStrayAnimalRequest(); 
+        try{
+            Integer.parseInt(zipTextField.getText());
+            if(validateFields()){
+                report.setReportId(reportIDTextField.getText());
+                report.setStreet(addressTextField.getText());
+                report.setCity(cityComboBox.getSelectedItem().toString());
+                report.setZipCode(Integer.parseInt(zipTextField.getText()));
+                report.setComments(commentsTextArea.getText());
+                report.setSender(users);
+                report.setAnimalType(animalTypeComboBox.getSelectedItem().toString());
+                report.setIssueType(issueComboBox.getSelectedItem().toString());
+                report.setUrgencyType(urgencyComboBox.getSelectedItem().toString());
+                report.setStatus("New Request");
+                report.setUsername(users.getName());
+                dB4OUtil.storeSystem(business);
+                //System.out.println(network.ge);
+                business.getNetworkList().stream().filter((network) -> (network.getName().equalsIgnoreCase(cityComboBox.getSelectedItem().toString()))).map((network) -> {
+                    currNetwork = network;
+                    return network;
+                }).forEachOrdered((_item) -> {
+                    currNetwork.getEnterpriseDirectory().getEnterpriseList().stream().filter((e) -> (e.getEnterpriseType().equals(EnterpriseType.Ngo))).forEachOrdered((e) -> {
+                        e.getWorkQueue().getWorkRequestList().add(report);
+                    });
+                });
+                users.getWorkQueue().getWorkRequestList().add(report);
+                JOptionPane.showMessageDialog(null, "Successfull");
+                clearFields();
+                logger.info(users.getName() + " reported an animal for rescue with reportID" + reportIDTextField.getText());
+                userProcessContainer.remove(this);
+                CardLayout layout = (CardLayout)userProcessContainer.getLayout();
+                layout.previous(userProcessContainer);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Please enter mandatory fields");
+                logger.error(users.getName() + " Please enter mandatory fields");
+            }
+        }
+        catch(RuntimeException run){
+            JOptionPane.showMessageDialog(null, "Invalid input in zipcode");
+            logger.error(users.getName() + " Invalid input in zipcode");
+            
+        }
+    }//GEN-LAST:event_submitReportBtnActionPerformed
+
+    private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
+        
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout)userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
+
+    }//GEN-LAST:event_backJButtonActionPerformed
+
+    public void clearFields(){
+        addressTextField.setText("");
+        zipTextField.setText("");
+        cityComboBox.setSelectedIndex(-1);
+        zipTextField.setText("");
+        animalTypeComboBox.setSelectedIndex(-1);
+        issueComboBox.setSelectedIndex(-1);
+        urgencyComboBox.setSelectedIndex(-1);
+        commentsTextArea.setText("");
+    }    
+    
+    public Boolean validateFields(){
+        if(addressTextField.getText().isEmpty() || zipTextField.getText().isEmpty() || 
+                cityComboBox.getSelectedItem()==null ||zipTextField.getText().isEmpty() ||
+                animalTypeComboBox.getSelectedItem()==null || issueComboBox.getSelectedItem()==null 
+                ||urgencyComboBox.getSelectedItem()==null ){
+            return false;
+        }
+         else{
+            if(!vald.validNum(zipTextField.getText())){
+                return false;
+            }
+            if(zipTextField.getText().length() != 5){
+            JOptionPane.showMessageDialog(null, "Please enter 5 digit zipcode");
+            return false;
+            }
+        }
+        return true;
+    }
+        
+    private void cityComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityComboBoxActionPerformed
+        // TODO add your handling code here:
+        
+        
+        
+    }//GEN-LAST:event_cityComboBoxActionPerformed
+
+    private void urgencyComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_urgencyComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_urgencyComboBoxActionPerformed
+
+    private void addressTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressTextFieldActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_addressTextFieldActionPerformed
+
+    private void addressTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_addressTextFieldFocusLost
+        
+       
+        
+       
+    
+        
+    }//GEN-LAST:event_addressTextFieldFocusLost
+
+    private void zipTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zipTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_zipTextFieldActionPerformed
+
+    private void MapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MapActionPerformed
+        // TODO add your handling code here:
+        
+        if(cityComboBox.getSelectedItem() == "Boston")
+        {
+        Engine engine = Engine.newInstance(
+        EngineOptions.newBuilder(HARDWARE_ACCELERATED)
+                .licenseKey("1BNDHFSC1G4PSE05B0M609QBPMBXYBWR9MENLZ3K7JWDNLRL40GDCRVD9H69LIR5G3SJGS")
+
+                .build());
+        System.setProperty("jxbrowser.license.key", "1BNDHFSC1G4PSE05B0M609QBPMBXYBWR9MENLZ3K7JWDNLRL40GDCRVD9H69LIR5G3SJGS");
+              Browser browser = engine.newBrowser();
+      SwingUtilities.invokeLater(() -> {
+                    BrowserView view = BrowserView.newInstance(browser);
+
+
+            JButton zoomInButton = new JButton("Zoom In");
+            zoomInButton.addActionListener(e -> {
+                if (zoomValue < MAX_ZOOM) {
+                    browser.mainFrame().ifPresent(frame ->
+                            frame.executeJavaScript("map.setZoom(" +
+                                    ++zoomValue + ")"));
+                }
+            });
+
+            JButton zoomOutButton = new JButton("Zoom Out");
+            zoomOutButton.addActionListener(e -> {
+                if (zoomValue > MIN_ZOOM) {
+                    browser.mainFrame().ifPresent(frame ->
+                            frame.executeJavaScript("map.setZoom(" +
+                                    --zoomValue + ")"));
+                }
+            });
+
+            JButton setMarkerButton = new JButton("Set Marker");
+            setMarkerButton.addActionListener(e ->
+                    browser.mainFrame().ifPresent(frame ->
+                            frame.executeJavaScript(setMarkerScript)));
+
+            JPanel toolBar = new JPanel();
+            toolBar.add(zoomInButton);
+            toolBar.add(zoomOutButton);
+            toolBar.add(setMarkerButton);
+
+            JFrame frame1 = new JFrame("Google Maps");
+            frame1.add(toolBar, BorderLayout.SOUTH);
+            frame1.add(view, BorderLayout.CENTER);
+            frame1.setSize(800, 500);
+            frame1.setVisible(true);
+            
+
+                                     browser.navigation().loadUrl("//Users/chaitanya/Desktop/HappyPawsAED/PetShelter/src/userinterface/UserRole/mapBoston.html");
+            
+            
+                    
+                                           
+                                  // browser.navigation().loadUrl("//Users/chaitanya/Desktop/HappyPawsAED/PetShelter/src/userinterface/UserRole/mapNewYork.html");
+
+                                       
+ 
+             
+        });
+        }
+        else
+            
+        {
+            Engine engine = Engine.newInstance(
+        EngineOptions.newBuilder(HARDWARE_ACCELERATED)
+                .licenseKey("1BNDHFSC1G4PSE05B0M609QBPMBXYBWR9MENLZ3K7JWDNLRL40GDCRVD9H69LIR5G3SJGS")
+
+                .build());
+        System.setProperty("jxbrowser.license.key", "1BNDHFSC1G4PSE05B0M609QBPMBXYBWR9MENLZ3K7JWDNLRL40GDCRVD9H69LIR5G3SJGS");
+              Browser browser = engine.newBrowser();
+      SwingUtilities.invokeLater(() -> {
+                    BrowserView view = BrowserView.newInstance(browser);
+
+
+            JButton zoomInButton = new JButton("Zoom In");
+            zoomInButton.addActionListener(e -> {
+                if (zoomValue < MAX_ZOOM) {
+                    browser.mainFrame().ifPresent(frame ->
+                            frame.executeJavaScript("map.setZoom(" +
+                                    ++zoomValue + ")"));
+                }
+            });
+
+            JButton zoomOutButton = new JButton("Zoom Out");
+            zoomOutButton.addActionListener(e -> {
+                if (zoomValue > MIN_ZOOM) {
+                    browser.mainFrame().ifPresent(frame ->
+                            frame.executeJavaScript("map.setZoom(" +
+                                    --zoomValue + ")"));
+                }
+            });
+
+            JButton setMarkerButton = new JButton("Set Marker");
+            setMarkerButton.addActionListener(e ->
+                    browser.mainFrame().ifPresent(frame ->
+                            frame.executeJavaScript(setMarkerScript)));
+
+            JPanel toolBar = new JPanel();
+            toolBar.add(zoomInButton);
+            toolBar.add(zoomOutButton);
+            toolBar.add(setMarkerButton);
+
+            JFrame frame1 = new JFrame("Google Maps");
+            frame1.add(toolBar, BorderLayout.SOUTH);
+            frame1.add(view, BorderLayout.CENTER);
+            frame1.setSize(800, 500);
+            frame1.setVisible(true);
+            
+
+                                     //browser.navigation().loadUrl("//Users/chaitanya/Desktop/HappyPawsAED/PetShelter/src/userinterface/UserRole/mapBoston.html");
+            
+            
+                    
+                                           
+                                  browser.navigation().loadUrl("//Users/chaitanya/Desktop/HappyPawsAED/PetShelter/src/userinterface/UserRole/mapNewYork.html");
+
+                                       
+ 
+             
+        });
+            
+        }
+        
+        
+    }//GEN-LAST:event_MapActionPerformed
+    
+    private void populateComboBox() {
+        cityComboBox.removeAllItems();
+        for (Network n: business.getNetworkList()) {
+                cityComboBox.addItem(n.getName());
+            }
+        }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Map;
+    private javax.swing.JTextField addressTextField;
+    private javax.swing.JComboBox<String> animalTypeComboBox;
+    private javax.swing.JButton backJButton;
+    private javax.swing.JComboBox<String> cityComboBox;
+    private javax.swing.JTextArea commentsTextArea;
+    private javax.swing.JComboBox<String> issueComboBox;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField reportIDTextField;
+    private javax.swing.JButton submitReportBtn;
+    private javax.swing.JComboBox<String> urgencyComboBox;
+    private javax.swing.JTextField zipTextField;
+    // End of variables declaration//GEN-END:variables
+    
+    
+}
