@@ -43,5 +43,10 @@ public class EmployeeDirectory {
         this.associatedEmployeeWithUser = associatedEmployeeWithUser;
     }
     
+    public void removeEmployee(Employee employee) {
+        
+        employeeList.remove(employee);
+    }
+    
     
 }

@@ -7,7 +7,6 @@ package userinterface.UserRole;
 import Business.POJO.Users;
 import Business.EcoSystem;
 import Business.WorkQueue.JoinPetSchoolRequest;
-import Business.WorkQueue.ReportStrayAnimalRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
@@ -41,17 +40,28 @@ public class StatusJoinPetSchoolJPanel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) workRequestJTable.getModel();
         
         model.setRowCount(0);
-        for (WorkRequest request : users.getWorkQueue().getWorkRequestList()){
+        /*for (WorkRequest  request : users.getWorkQueue().getWorkRequestList()){
             Object[] row = new Object[10];
-            //Integer reportID = ((ReportStrayAnimalRequest) request).getReportId();
             row[0] = ((JoinPetSchoolRequest) request);
             row[1] = request.getStatus();
             row[2] = ((JoinPetSchoolRequest) request).getCourseType();
             row[3] = ((JoinPetSchoolRequest) request).getComments();
             row[4] = request.getResolveDate();
             model.addRow(row);
-        }
-        logger.info(users.getName() + " logged into StatusReportAnimalJPanel");
+        }*/
+        
+        users.getWorkQueue().getWorkRequestList()
+                                                       .stream().filter(wq->wq instanceof JoinPetSchoolRequest)
+                                                       .forEach(request->{
+                                                           Object[] row = new Object[8];
+                                                            row[0] = ((JoinPetSchoolRequest) request);
+                                                            row[1] = request.getStatus();
+                                                            row[2] = ((JoinPetSchoolRequest) request).getCourseType();
+                                                            row[3] = ((JoinPetSchoolRequest) request).getComments();
+                                                            row[4] = request.getResolveDate();
+            model.addRow(row);
+                                                         });
+        logger.info(users.getName() + " logged into StatusJoinPetSchoolJPanel");
     }
     /**
      * This method is called from within the constructor to initialize the form.

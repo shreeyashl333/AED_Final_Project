@@ -37,6 +37,10 @@ public class UserWorkAreaJPanel extends javax.swing.JPanel {
             
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
     private final Logger logger = Logger.getLogger(this.getClass());
+    private EmailUtility em=new EmailUtility();
+    private char[] genratedOTP = em.createOtp();
+           
+           
     
     
     public UserWorkAreaJPanel(JPanel userProcessContainer, Users users, EcoSystem business, Boolean isNewUser) {
@@ -104,8 +108,9 @@ public class UserWorkAreaJPanel extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        OTPTextField = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -171,7 +176,7 @@ public class UserWorkAreaJPanel extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel2.setText("User Name");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 350, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 340, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel3.setText("Password");
@@ -238,12 +243,13 @@ public class UserWorkAreaJPanel extends javax.swing.JPanel {
         jLabel8.setText("OTP");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 40, -1));
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        OTPTextField.setFont(emailJF.getFont());
+        OTPTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                OTPTextFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 180, 240, 30));
+        jPanel1.add(OTPTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 180, 240, 30));
 
         jButton4.setText("Send OTP");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -251,9 +257,17 @@ public class UserWorkAreaJPanel extends javax.swing.JPanel {
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 130, -1, -1));
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 130, -1, -1));
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 170, 590, 460));
+        jButton6.setText("Check OTP");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 180, -1, -1));
+
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 170, 630, 520));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/images/common.jpg"))); // NOI18N
         add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 850));
@@ -304,22 +318,27 @@ public class UserWorkAreaJPanel extends javax.swing.JPanel {
             userProcessContainer.remove(this);
             CardLayout layout = (CardLayout) userProcessContainer.getLayout();
             layout.previous(userProcessContainer);
-            EmailUtility em=new EmailUtility();
+            //EmailUtility em=new EmailUtility();
             System.out.println(emailId);
             
             
-     /*       
-      String numbers = "1234567890";
-      Random random = new Random();
-      char[] otp = new char[6];
-
-      for(int i = 0; i< 6 ; i++) {
-         otp[i] = numbers.charAt(random.nextInt(numbers.length()));}*/
+            
+            
+            
+             if (        String.valueOf(OTPTextField.getText()).equals(String.valueOf(genratedOTP)))
+        {
             
          em.sendMail(emailId, "Account Registration Successfull", "You have been Successfully Registered. Welcome to the Happy Paws");
-            
+        
             logger.info(nameJTextField.getText() + " user signed up successfully and email sent to " + emailJF.getText());
-            
+        }
+             else
+                 
+             {
+                JOptionPane.showMessageDialog(null, "You have entered the wrong OTP. Please check once again");
+
+             
+             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -352,48 +371,53 @@ public class UserWorkAreaJPanel extends javax.swing.JPanel {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         
-        /*
-        String numbers = "1234567890";
-      Random random = new Random();
-      char[] otp = new char[6];
+        
+           // char[] otp = em.createOtp();
+            
+            System.out.println(genratedOTP);
+            String emailId=emailJF.getText();
 
-      for(int i = 0; i< 6 ; i++) {
-         otp[i] = numbers.charAt(random.nextInt(numbers.length()));}
-        if (String.valueOf(jTextField1) == null)
-        {
-        String emailId=emailJF.getText();
-        
-        
-        EmailUtility em=new EmailUtility();
+            
+             em.sendOTPMail(emailId, "Email Varification OTP", "Please find an OTP for email varification",String.valueOf(genratedOTP));
+            
+            logger.info(nameJTextField.getText() + " Varification email sent to " + emailJF.getText());
+            
+            
+            
+            
+            
+           
+            
 
-        
+      
        
-      em.sendOTPMail(emailId, "Varification Email OTP", "You have been Successfully Registered. Welcome to the Happy Paws",String.valueOf(otp));
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void OTPTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OTPTextFieldActionPerformed
+        // TODO add your handling code here:
+        
+        
+        
+            
+    }//GEN-LAST:event_OTPTextFieldActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+                    System.out.println(genratedOTP);
+
+        if (        String.valueOf(OTPTextField.getText()).equals(String.valueOf(genratedOTP)))
+        {
+                   JOptionPane.showMessageDialog(null, "Email Varification Successfull");
 
         }
         
-       else
+        else
             
         {
-            if(String.valueOf(jTextField1) == String.valueOf(otp))
-                
-            {
-                
-                
-             JOptionPane.showMessageDialog(null, "");
+                JOptionPane.showMessageDialog(null, "You have entered the wrong OTP. Please check once again");
 
-            
-            }
-        
-        }*/
-        
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-        
-            
-    }//GEN-LAST:event_jTextField1ActionPerformed
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
     
     public Boolean validateEmptyFields(){
         if(zipJF.getText().isEmpty() || nameJTextField.getText().isEmpty() || nameJF.getText().isEmpty() || emailJF.getText().isEmpty() || cityJF.getText().isEmpty()){
@@ -434,6 +458,7 @@ public class UserWorkAreaJPanel extends javax.swing.JPanel {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField OTPTextField;
     private javax.swing.JLabel UserName;
     private javax.swing.JTextField cityJF;
     private javax.swing.JTextField emailJF;
@@ -442,6 +467,7 @@ public class UserWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -452,7 +478,6 @@ public class UserWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField nameJF;
     private javax.swing.JTextField nameJTextField;
     private javax.swing.JPasswordField passwordJTextField;

@@ -6,6 +6,7 @@ package userinterface.AdministrativeRole;
 
 import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
+import Business.Employee.Employee;
 import Business.Enterprise.Enterprise;
 import Business.Enterprise.Enterprise.EnterpriseType;
 import Business.Organization.Organization;
@@ -35,12 +36,13 @@ public class ManageOrganizationJPanel extends javax.swing.JPanel {
     /**
      * Creates new form ManageOrganizationJPanel
      */
-    public ManageOrganizationJPanel(JPanel userProcessContainer, OrganizationDirectory organizationDirectory, EnterpriseType enterpriseType, EcoSystem system) {
+    public ManageOrganizationJPanel(JPanel userProcessContainer, OrganizationDirectory organizationDirectory,Enterprise enterprise, EnterpriseType enterpriseType, EcoSystem system) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
         this.directory = organizationDirectory;
         this.enterpriseType = enterpriseType;
         this.system = system;
+        this.enterprise = enterprise;
         jLabel2.setText(enterpriseType.getValue());
         populateTable();
         populateCombo();
@@ -50,7 +52,6 @@ public class ManageOrganizationJPanel extends javax.swing.JPanel {
         organizationJComboBox.removeAllItems();
         
         String changetype = enterpriseType.getValue();
-        System.out.println(enterpriseType.getValue());
         if(changetype.equalsIgnoreCase("Vet Hospital Enterprise")){
             for(VetHospitalType type:Organization.VetHospitalType.values()){
                  if (!type.getValue().equals(VetHospitalType.Admin.getValue()))
@@ -88,7 +89,7 @@ public class ManageOrganizationJPanel extends javax.swing.JPanel {
         for (Organization organization : directory.getOrganizationList()){
             Object[] row = new Object[2];
             row[0] = organization.getOrganizationID();
-            row[1] = organization.getName();
+            row[1] = organization;
             model.addRow(row);
         }
     }
@@ -111,6 +112,9 @@ public class ManageOrganizationJPanel extends javax.swing.JPanel {
         organizationJComboBox = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        BtnDelete = new javax.swing.JButton();
+        BtnUpdate = new javax.swing.JButton();
+        BtnEdit = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
         setSize(new java.awt.Dimension(1200, 850));
@@ -156,7 +160,7 @@ public class ManageOrganizationJPanel extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jLabel2.setText("jLabel2");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, 330, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, 420, -1));
 
         backJButton.setBackground(new java.awt.Color(0, 153, 255));
         backJButton.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
@@ -207,6 +211,33 @@ public class ManageOrganizationJPanel extends javax.swing.JPanel {
             }
         });
         jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 380, 160, -1));
+
+        BtnDelete.setBackground(new java.awt.Color(0, 153, 255));
+        BtnDelete.setText("Delete Organization");
+        BtnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnDeleteActionPerformed(evt);
+            }
+        });
+        jPanel1.add(BtnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 240, -1, -1));
+
+        BtnUpdate.setBackground(new java.awt.Color(0, 153, 255));
+        BtnUpdate.setText("Update Organzation");
+        BtnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnUpdateActionPerformed(evt);
+            }
+        });
+        jPanel1.add(BtnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 240, -1, -1));
+
+        BtnEdit.setBackground(new java.awt.Color(0, 153, 255));
+        BtnEdit.setText("Edit");
+        BtnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEditActionPerformed(evt);
+            }
+        });
+        jPanel1.add(BtnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 60, -1, -1));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/images/adopt_1200x850.jpg"))); // NOI18N
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 850));
@@ -283,8 +314,86 @@ public class ManageOrganizationJPanel extends javax.swing.JPanel {
     private void organizationJComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_organizationJComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_organizationJComboBoxActionPerformed
+    private void BtnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDeleteActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) organizationJTable.getModel();
+        int selectedRow = organizationJTable.getSelectedRow();
+        if (selectedRow >= 0) {
+            int selectionButton = JOptionPane.YES_NO_OPTION;
+            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete?", "Warning", selectionButton);
+            if (selectionResult == JOptionPane.YES_OPTION) {
+            Organization organization  = (Organization) organizationJTable.getValueAt(selectedRow, 1);           
+            System.out.println(organization);
+            System.out.println(enterprise);
+                     
+            enterprise.getOrganizationDirectory().removeOrganization(organization);
+            populateTable();
+            }
+        }else{
+               JOptionPane.showMessageDialog(null, "Please select a row");
+        }
+    }//GEN-LAST:event_BtnDeleteActionPerformed
+
+    private void BtnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnUpdateActionPerformed
+        // TODO add your handling code here:
+        
+        String name = jTextField1.getText();
+         
+         //Employee employee = (Employee) organizationEmpJComboBox.getSelectedItem();
+
+
+         
+       
+            Organization org = (Organization) organizationJComboBox.getSelectedItem();
+            DefaultTableModel model = (DefaultTableModel) organizationJTable.getModel();
+            int selectedRow = organizationJTable.getSelectedRow();
+            if (selectedRow >= 0) {
+            int selectionButton = JOptionPane.YES_NO_OPTION;
+            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to update?", "Warning", selectionButton);
+            if (selectionResult == JOptionPane.YES_OPTION) {
+                Organization organization  = (Organization) organizationJTable.getValueAt(selectedRow, 1);
+                System.out.println(organization);
+
+                organization.setName(name);
+                BtnUpdate.setEnabled(false);
+                addJButton.setEnabled(true);
+                jTextField1.setText("");
+               populateTable();
+
+                JOptionPane.showMessageDialog(null, "update success");
+            }
+            
+            else {
+            JOptionPane.showMessageDialog(null, "Please select a row");
+            
+        }
+            }
+         
+    }//GEN-LAST:event_BtnUpdateActionPerformed
+Organization selectedOrganization;
+
+    private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditActionPerformed
+        // TODO add your handling code here:
+        
+        int selected = organizationJTable.getSelectedRow();
+        if(selected < 0){
+            JOptionPane.showMessageDialog(null, "please select a row");
+        }else{
+            BtnUpdate.setEnabled(true);
+            addJButton.setEnabled(false);
+            selectedOrganization = (Organization)organizationJTable.getValueAt(selected, 1);
+            organizationJComboBox.setSelectedItem(organizationJComboBox.getSelectedItem());
+            organizationJComboBox.setEnabled(false);
+            jTextField1.setText(selectedOrganization.getName());
+            
+            BtnUpdate.setEnabled(true);
+        }
+    }//GEN-LAST:event_BtnEditActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnDelete;
+    private javax.swing.JButton BtnEdit;
+    private javax.swing.JButton BtnUpdate;
     private javax.swing.JButton addJButton;
     private javax.swing.JButton backJButton;
     private javax.swing.JLabel jLabel1;

@@ -78,9 +78,11 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
 
         for (Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()) {
             for (UserAccount ua : organization.getUserAccountDirectory().getUserAccountList()) {
-                Object row[] = new Object[2];
+                Object row[] = new Object[3];
                 row[0] = ua;
                 row[1] = ua.getRole();
+                row[2] = organization;
+                
                 ((DefaultTableModel) userJTable.getModel()).addRow(row);
             }
         }
@@ -109,6 +111,9 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         roleJComboBox = new javax.swing.JComboBox();
         passwordJTextField = new javax.swing.JPasswordField();
+        BtnDeleteUsrAcc = new javax.swing.JButton();
+        UpdateBtn = new javax.swing.JButton();
+        BtnEdit = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -139,14 +144,14 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "User Name", "Role"
+                "User Name", "Role", "Organization"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -212,6 +217,33 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
         add(roleJComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 380, 210, -1));
         add(passwordJTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 460, 210, 30));
 
+        BtnDeleteUsrAcc.setBackground(new java.awt.Color(0, 153, 255));
+        BtnDeleteUsrAcc.setText("Delete User");
+        BtnDeleteUsrAcc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnDeleteUsrAccActionPerformed(evt);
+            }
+        });
+        add(BtnDeleteUsrAcc, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 260, -1, -1));
+
+        UpdateBtn.setBackground(new java.awt.Color(0, 153, 255));
+        UpdateBtn.setText("Update User");
+        UpdateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateBtnActionPerformed(evt);
+            }
+        });
+        add(UpdateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 260, -1, -1));
+
+        BtnEdit.setBackground(new java.awt.Color(0, 153, 255));
+        BtnEdit.setText("Edit");
+        BtnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEditActionPerformed(evt);
+            }
+        });
+        add(BtnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 20, -1, -1));
+
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/images/adopt_1200x850.jpg"))); // NOI18N
         add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 850));
     }// </editor-fold>//GEN-END:initComponents
@@ -271,7 +303,96 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_roleJComboBoxActionPerformed
 
+    private void BtnDeleteUsrAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDeleteUsrAccActionPerformed
+        // TODO add your handling code here:
+        
+        DefaultTableModel model = (DefaultTableModel) userJTable.getModel();
+        int selectedRow = userJTable.getSelectedRow();
+        if (selectedRow >= 0) {
+            int selectionButton = JOptionPane.YES_NO_OPTION;
+            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete?", "Warning", selectionButton);
+            if (selectionResult == JOptionPane.YES_OPTION) {
+                Organization organization  = (Organization) userJTable.getValueAt(selectedRow, 2);
+                
+                UserAccount useraccount = (UserAccount)userJTable.getValueAt(selectedRow, 0);               
+                organization.getUserAccountDirectory().removeUserAccount(useraccount);
+                popData();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a row");
+            
+        }
+    }//GEN-LAST:event_BtnDeleteUsrAccActionPerformed
+Employee selectedEmployee;
+UserAccount selecteduser;
+
+    private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = userJTable.getSelectedRow();
+        if(selectedRow < 0){
+            JOptionPane.showMessageDialog(null, "please select a row");
+        }else{
+            UpdateBtn.setEnabled(true);
+            selecteduser = (UserAccount)userJTable.getValueAt(selectedRow, 0);
+            organizationJComboBox.setSelectedItem(userJTable.getValueAt(selectedRow, 2));
+            roleJComboBox.setSelectedItem(userJTable.getValueAt(selectedRow, 1));   
+            employeeJComboBox.setSelectedItem(selecteduser.getUsername());
+            nameJTextField.setText(selecteduser.getUsername());
+            passwordJTextField.setText(selecteduser.getPassword());
+            
+            UpdateBtn.setEnabled(true);
+        }
+       
+    }//GEN-LAST:event_BtnEditActionPerformed
+
+    private void UpdateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateBtnActionPerformed
+        // TODO add your handling code here:
+        
+        String name = nameJTextField.getText();
+                String pass = passwordJTextField.getSelectedText();
+
+         
+         //Employee employee = (Employee) organizationEmpJComboBox.getSelectedItem();
+
+
+         
+       
+            Organization org = (Organization) organizationJComboBox.getSelectedItem();
+                    DefaultTableModel model = (DefaultTableModel) userJTable.getModel();
+                            int selectedRow = userJTable.getSelectedRow();
+            if (selectedRow >= 0) {
+            int selectionButton = JOptionPane.YES_NO_OPTION;
+            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to update?", "Warning", selectionButton);
+            if (selectionResult == JOptionPane.YES_OPTION) {
+                Organization organization  = (Organization) userJTable.getValueAt(selectedRow, 2);
+                System.out.println(organization);
+                UserAccount user  = (UserAccount) userJTable.getValueAt(selectedRow, 0);
+                System.out.println(user);
+
+                user.setUsername(name);
+               //user.setPassword(pass);
+
+                UpdateBtn.setEnabled(false);
+                nameJTextField.setText("");
+                passwordJTextField.setText("");
+
+               popData();
+
+                JOptionPane.showMessageDialog(null, "update success");
+            }
+            
+            else {
+            JOptionPane.showMessageDialog(null, "Please select a row");
+            
+        }
+            }
+         
+    }//GEN-LAST:event_UpdateBtnActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnDeleteUsrAcc;
+    private javax.swing.JButton BtnEdit;
+    private javax.swing.JButton UpdateBtn;
     private javax.swing.JButton backjButton1;
     private javax.swing.JButton createUserJButton;
     private javax.swing.JComboBox employeeJComboBox;

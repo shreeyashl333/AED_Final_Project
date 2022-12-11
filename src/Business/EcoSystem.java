@@ -95,4 +95,23 @@ public class EcoSystem extends Organization{
         }
         return true;
     }
+    public void removeNetwork(Network network) {
+        networkList.remove(network);
+    }
+    
+    public void updateNetwork(Network network,String name){
+        for(Network n:networkList){
+            if(n.equals(network)){
+                n.setName(name);
+            }
+        }
+    }
+    public boolean isDuplicateNetwork(String name) {
+     for(Network n:networkList){
+            if(n.equals(name)){
+                return true;
+            }
+        }    
+    return false;
+    }
 }

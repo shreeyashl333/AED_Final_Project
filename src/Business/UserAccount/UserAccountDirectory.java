@@ -47,4 +47,16 @@ public class UserAccountDirectory {
 //        for all usernames in useraccountlist get if username is equal to current
         return this.userAccountList.stream().noneMatch((ua) -> (ua.getUsername().equals(username)));
     }
+    
+     public UserAccount removeUserAccount(UserAccount useraccount){
+        userAccountList.remove(useraccount);
+        return useraccount;
+    }
+     public UserAccount fetchUserAccount(String username){
+        for (UserAccount ua : userAccountList){
+            if (ua.getUsername().equals(username))
+                return ua;
+        }
+        return null;
+    }
 }

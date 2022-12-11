@@ -1,57 +1,28 @@
 <!DOCTYPE html>
-
- 
-
 <html>
-<head>
-	<title>Simple Map With Marker</title>
-	<!-- Style for map div -->
-	<style type="text/css">
-		#map {
-			height: 600px;
-			width: 100%;
-		}
-	</style>
-</head>
-<body>
-	<!-- map div -->
-	<div id="map"></div>
-
-	<!-- Js for map -->
-	<script type="text/javascript">
-		function initMap() {
-			//--- set the latitude and longitude for map position ---//
-			var point = {lat : 42.3356548, lng : -71.0932206};
-			//--- set the center point of map and zoom ---//
-			var map = new google.maps.Map(document.getElementById("map"), {
-				center : point,
-				zoom : 17
-			});
-			//--- set the marker position and animation for this marker ---//
-			var marker = new google.maps.Marker({
-				position : point,
-				map : map,
-				animation : google.maps.Animation.BOUNCE
-			});
-			//--- write information for map marker ---//
-			var content = "<h2> Boston Pet Shelter  </h2>"+
-						  "<p> Address: 75 St Alphonus</p>"+
-						  "<p> Boston, MA-02120 </p>"+
-						  "<p> Cell : 857-498-3342 </p>"+
-						  "<p> Email : inamdar.chaitanya6398@gmail.com </p>";
-			//--- set the content for infowindow ---//
-			var infowindow = new google.maps.InfoWindow({
-				content : content
-			});
-			//--- while click on marker show the infowindow ---//
-			marker.addListener('click', function() {
-				infowindow.open(map, marker);
-			});
-		}
-	</script>
-	 <!-- The async defer allow the browser to render the page when API load
-    -- The key is the google api key provided for you
-    -- The callback execute the initMap() function -->
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9bONSe0v_t8N3lElc5MNokNNfWwCdk0s&callback=initMap"></script>
-</body>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Animating Symbols</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script src="indexBoston.js" charset="utf-8"></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9bONSe0v_t8N3lElc5MNokNNfWwCdk0s&callback=initMap">
+    </script>
+  </body>
 </html>

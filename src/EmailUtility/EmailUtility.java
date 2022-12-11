@@ -102,7 +102,7 @@ public class EmailUtility {
             String timeStamp = new SimpleDateFormat("yyyymmdd_hh-mm-ss").format(new Date());
             msg.setSubject(subject + timeStamp);
             msg.setSentDate(new Date());
-            msg.setText(message + Otp);
+            msg.setText(message + " " + Otp);
             msg.setHeader("XPriority", "1");
             Transport.send(msg);
             System.out.println("Mail has been sent successfully");
@@ -112,7 +112,7 @@ public class EmailUtility {
     }
     
     
-    public void createOtp(String OTP)
+    public char[] createOtp()
     {
         String numbers = "1234567890";
       Random random = new Random();
@@ -120,6 +120,7 @@ public class EmailUtility {
 
       for(int i = 0; i< 6 ; i++) {
          otp[i] = numbers.charAt(random.nextInt(numbers.length()));}
+      return otp;
     
     }
     

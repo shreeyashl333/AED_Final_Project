@@ -53,6 +53,43 @@ public class EnterpriseDirectory {
         return enterprise;
     }
     
+    public Enterprise fetchEnterprise(String name, Enterprise.EnterpriseType type){
+         for(Enterprise enterprise: enterpriseList){
+             if(enterprise.getName().equals(name) && enterprise.getEnterpriseType().equals(type)){
+                 return enterprise;
+             }
+           
+         }
+           return null;
+     }
+    
+    
+    public Enterprise removeEnterprise(String name, Enterprise.EnterpriseType type) {
+        Enterprise enterprise = fetchEnterprise(name, type);
+        if (type == Enterprise.EnterpriseType.VetHospital) {
+            enterpriseList.remove(enterprise);
+        }
+        if (type == Enterprise.EnterpriseType.Merchant) {
+            enterpriseList.remove(enterprise);
+        }
+        if (type == Enterprise.EnterpriseType.Ngo) {
+            enterpriseList.remove(enterprise);
+        }
+         if (type == Enterprise.EnterpriseType.PetSchool) {
+            enterpriseList.remove(enterprise);
+        }
+        return enterprise;
+    }
+    
+    public boolean IsDuplicateEnterprise(String name){
+        for(Enterprise enterprise: enterpriseList){
+             if(enterprise.getName().equals(name)){
+                 return true;
+             }
+     }
+        return false; 
+    }
+    
     public Boolean checkIfEnterpriseIsUnique(String name){
         return this.enterpriseList.stream().noneMatch(ep->ep.getName().equalsIgnoreCase(name));
     }

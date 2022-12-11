@@ -111,7 +111,7 @@ public class MedAdminWorkAreaJPanel extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 36)); // NOI18N
-        jLabel1.setText("Food Admin Work Area");
+        jLabel1.setText("Med Admin Work Area");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 50, -1, -1));
 
         workRequestJTable.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N

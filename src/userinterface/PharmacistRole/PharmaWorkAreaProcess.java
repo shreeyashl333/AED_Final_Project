@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Suraj PC
+ * @author shree
  */
 public class PharmaWorkAreaProcess extends javax.swing.JPanel {
 

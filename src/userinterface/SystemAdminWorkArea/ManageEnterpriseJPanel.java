@@ -10,6 +10,7 @@ import Business.Enterprise.Enterprise;
 import Business.Network.Network;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -23,6 +24,8 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
     private JPanel userProcessContainer;
     private EcoSystem system;
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
+        private final static Logger logr = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
     /**
      * Creates new form ManageEnterpriseJPanel
      */
@@ -35,7 +38,7 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
         populateComboBox();
     }
 
-    private void populateTable() {
+     void populateTable() {
         DefaultTableModel model = (DefaultTableModel) enterpriseJTable.getModel();
 
         model.setRowCount(0);
@@ -43,8 +46,8 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
             for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
                 Object[] row = new Object[3];
                 row[0] = enterprise.getName();
-                row[1] = network.getName();
-                row[2] = enterprise.getEnterpriseType().getValue();
+                row[1] = network;
+                row[2] = enterprise.getEnterpriseType();
 
                 model.addRow(row);
             }
@@ -86,6 +89,8 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         nameJTextField = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(245, 241, 237));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -122,7 +127,7 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
                 submitJButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(submitJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(532, 419, 124, 36));
+        jPanel1.add(submitJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 400, 124, 36));
 
         enterpriseTypeJComboBox.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         enterpriseTypeJComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -130,7 +135,7 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
                 enterpriseTypeJComboBoxActionPerformed(evt);
             }
         });
-        jPanel1.add(enterpriseTypeJComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(443, 236, 213, -1));
+        jPanel1.add(enterpriseTypeJComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 270, 213, -1));
 
         backJButton.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         backJButton.setText("Back");
@@ -143,18 +148,18 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel2.setText("Name");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(312, 298, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 330, -1, -1));
 
         networkJComboBox.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jPanel1.add(networkJComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(443, 176, 213, -1));
+        jPanel1.add(networkJComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 210, 213, -1));
 
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel1.setText("Network");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(304, 179, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel3.setText("Enterprise Type");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(277, 242, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, -1, -1));
 
         nameJTextField.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         nameJTextField.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -162,7 +167,25 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
                 nameJTextFieldFocusLost(evt);
             }
         });
-        jPanel1.add(nameJTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(443, 295, 213, -1));
+        jPanel1.add(nameJTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 330, 213, -1));
+
+        jButton2.setBackground(new java.awt.Color(0, 153, 255));
+        jButton2.setText("Update");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 150, -1, -1));
+
+        jButton1.setBackground(new java.awt.Color(0, 153, 255));
+        jButton1.setText("Delete");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 150, -1, -1));
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 13, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
@@ -212,10 +235,55 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_nameJTextFieldFocusLost
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+         logr.info("delete Button aaction Performed");
+        DefaultTableModel model = (DefaultTableModel) enterpriseJTable.getModel();
+        int selectedRow = enterpriseJTable.getSelectedRow();
+        if(selectedRow > 0){
+         int selectionButton = JOptionPane.YES_NO_OPTION;
+         int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete?", "Warning", selectionButton);
+        if (selectionResult == JOptionPane.YES_OPTION) {
+        String enterpriseName =(String) enterpriseJTable.getValueAt(selectedRow, 0);
+        Network network = (Network) enterpriseJTable.getValueAt(selectedRow, 1);
+        Enterprise.EnterpriseType type = (Enterprise.EnterpriseType)enterpriseJTable.getValueAt(selectedRow, 2);
+        Enterprise enterprise = network.getEnterpriseDirectory().removeEnterprise(enterpriseName, type);
+        populateTable();
+         logr.info("Enterprise has been deleted");
+        }
+        }else {
+            JOptionPane.showMessageDialog(null, "Please select a row");
+            
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+         logr.info("Update Button aaction Performed");
+        DefaultTableModel model = (DefaultTableModel) enterpriseJTable.getModel();
+        int selectedRow = enterpriseJTable.getSelectedRow();
+        if(selectedRow >= 0){
+            String enterpriseName =(String) enterpriseJTable.getValueAt(selectedRow, 0);
+            Network network = (Network) enterpriseJTable.getValueAt(selectedRow, 1);
+            Enterprise.EnterpriseType type = (Enterprise.EnterpriseType)enterpriseJTable.getValueAt(selectedRow, 2);
+            UpdateEnterpriseJFrame f = new UpdateEnterpriseJFrame(system, network,enterpriseName,type, this);
+            f.setLocationRelativeTo(null);
+            f.setVisible(true);
+            logr.info("UpdateNetworkJFrame");
+            logr.info("Enterprise has been updated");
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select a row");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backJButton;
     private javax.swing.JTable enterpriseJTable;
     private javax.swing.JComboBox enterpriseTypeJComboBox;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

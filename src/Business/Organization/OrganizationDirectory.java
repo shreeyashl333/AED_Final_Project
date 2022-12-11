@@ -5,6 +5,7 @@
 package Business.Organization;
 
 
+import Business.Enterprise.Enterprise;
 import Business.Organization.Organization.MerchantType;
 import Business.Organization.Organization.NGOType;
 import Business.Organization.Organization.PetSchoolType;
@@ -84,7 +85,19 @@ public class OrganizationDirectory {
         
         return organization;
     }
-    
+    public Organization fetchOrganization(String name){
+         for(Organization organization: organizationList){
+             if(organization.getName().equals(name)){
+                 return organization;
+             }
+           
+         }
+           return null;
+     }
+     public void removeOrganization(Organization organization) {
+       System.out.println(organization);
+         organizationList.remove(organization);
+    }
     
         
     
