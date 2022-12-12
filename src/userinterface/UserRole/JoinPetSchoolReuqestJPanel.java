@@ -84,6 +84,8 @@ public class JoinPetSchoolReuqestJPanel extends javax.swing.JPanel {
         backJButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         cityComboBox = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        EmailField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(1147, 809));
@@ -172,6 +174,13 @@ public class JoinPetSchoolReuqestJPanel extends javax.swing.JPanel {
         });
         add(cityComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 202, -1));
 
+        jLabel6.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        jLabel6.setText("Email ID for Invoice:");
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, -1, -1));
+
+        EmailField.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        add(EmailField, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 290, 210, 30));
+
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/images/school.jpg"))); // NOI18N
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, 810));
     }// </editor-fold>//GEN-END:initComponents
@@ -193,6 +202,10 @@ public class JoinPetSchoolReuqestJPanel extends javax.swing.JPanel {
                 report.setCourseType(CourseTypeComboBox.getSelectedItem().toString());
                 report.setStatus("New Request");
                 report.setUsername(users.getName());
+                report.setUsername(users.getName());
+                report.setEmailId(EmailField.getText());
+
+                
                 dB4OUtil.storeSystem(business);
                 //System.out.println(network.ge);
                 business.getNetworkList().stream().filter((network) -> (network.getName().equalsIgnoreCase(cityComboBox.getSelectedItem().toString()))).map((network) -> {
@@ -248,6 +261,7 @@ public class JoinPetSchoolReuqestJPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CourseTypeComboBox;
+    private javax.swing.JTextField EmailField;
     private javax.swing.JComboBox<String> animalTypeComboBox;
     private javax.swing.JButton backJButton;
     private javax.swing.JComboBox<String> cityComboBox;
@@ -257,6 +271,7 @@ public class JoinPetSchoolReuqestJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;

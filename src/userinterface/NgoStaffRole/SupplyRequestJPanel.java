@@ -211,6 +211,8 @@ public class SupplyRequestJPanel extends javax.swing.JPanel {
                 request.setStatus("Approved request");
                 populateTable();
             }else{
+                JOptionPane.showMessageDialog(null, "Request state changed to pending bill pay");
+
                 request.setStatus("Pending bill pay");
                 dB4OUtil.storeSystem(business);
                 for(UserAccount user : ngoOfficeOrganization.getUserAccountDirectory().getUserAccountList()) {

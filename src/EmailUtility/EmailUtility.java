@@ -16,6 +16,10 @@ import javax.mail.internet.*;
 
 import javax.swing.*;
 import java.awt.*;
+import static java.lang.ProcessBuilder.Redirect.to;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 
 /**
  * 
@@ -109,6 +113,49 @@ public class EmailUtility {
         } catch (MessagingException mex) {
             System.out.println("Unable to send an email" + mex);
         }
+    }
+    
+    public void sendBillMail(String receiverEmail){
+        
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(adminEmail,adminPaswrd);
+            }
+        });
+        
+        try {
+             MimeMessage message = new MimeMessage(session);    
+             String to = receiverEmail;
+            //message.setFrom(new InternetAddress(user));     
+            message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));    
+            message.setSubject("Bill Generated for Pet School Admission");         
+
+            //3) create MimeBodyPart object and set your message text        
+            BodyPart messageBodyPart1 = new MimeBodyPart();     
+            messageBodyPart1.setText("Please find an attached Bill PDF!");          
+
+            //4) create new MimeBodyPart object and set DataHandler object to this object        
+            MimeBodyPart messageBodyPart2 = new MimeBodyPart();      
+            String filename = "/Users/chaitanya/Desktop/Bill.pdf";//change accordingly     
+            DataSource source = new FileDataSource(filename);    
+            messageBodyPart2.setDataHandler(new DataHandler(source));    
+            messageBodyPart2.setFileName(filename);             
+
+            //5) create Multipart object and add MimeBodyPart objects to this object        
+            Multipart multipart = new MimeMultipart();    
+            multipart.addBodyPart(messageBodyPart1);     
+            multipart.addBodyPart(messageBodyPart2);      
+
+            //6) set the multiplart object to the message object    
+            message.setContent(multipart );        
+
+            //7) send message    
+            Transport.send(message);      
+            System.out.println("message sent....");
+        } catch (MessagingException mex) {
+            System.out.println("Unable to send an email" + mex);
+        }
+
     }
     
     

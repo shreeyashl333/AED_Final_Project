@@ -509,7 +509,7 @@ public class ReportAnimalJPanel extends javax.swing.JPanel {
             });
             
         }
-        else
+        else if(String.valueOf(cityComboBox.getSelectedItem()).equals("New York"))
             
         {
             
@@ -560,6 +560,68 @@ public class ReportAnimalJPanel extends javax.swing.JPanel {
                 
                 
                 browser.navigation().loadUrl("//Users/chaitanya/Desktop/HappyPawsAED/PetShelter/src/userinterface/UserRole/mapNewYork.html");
+                
+                
+                
+                
+                // browser.navigation().loadUrl("//Users/chaitanya/Desktop/HappyPawsAED/PetShelter/src/userinterface/UserRole/mapNewYork.html");
+                
+                
+                
+                
+            });
+        }
+        
+        else
+            
+        {
+            Engine engine = Engine.newInstance(
+                    EngineOptions.newBuilder(HARDWARE_ACCELERATED)
+                            .licenseKey("1BNDHFSC1G4PSE05B0M609QBPMBXYBWR9MENLZ3K7JWDNLRL40GDCRVD9H69LIR5G3SJGS")
+                            
+                            .build());
+            System.setProperty("jxbrowser.license.key", "1BNDHFSC1G4PSE05B0M609QBPMBXYBWR9MENLZ3K7JWDNLRL40GDCRVD9H69LIR5G3SJGS");
+            Browser browser = engine.newBrowser();
+            SwingUtilities.invokeLater(() -> {
+                BrowserView view = BrowserView.newInstance(browser);
+                
+                
+                JButton zoomInButton = new JButton("Zoom In");
+                zoomInButton.addActionListener(e -> {
+                    if (zoomValue < MAX_ZOOM) {
+                        browser.mainFrame().ifPresent(frame ->
+                                frame.executeJavaScript("map.setZoom(" +
+                                        ++zoomValue + ")"));
+                    }
+                });
+                
+                JButton zoomOutButton = new JButton("Zoom Out");
+                zoomOutButton.addActionListener(e -> {
+                    if (zoomValue > MIN_ZOOM) {
+                        browser.mainFrame().ifPresent(frame ->
+                                frame.executeJavaScript("map.setZoom(" +
+                                        --zoomValue + ")"));
+                    }
+                });
+                
+                JButton setMarkerButton = new JButton("Set Marker");
+                setMarkerButton.addActionListener(e ->
+                        browser.mainFrame().ifPresent(frame ->
+                                frame.executeJavaScript(setMarkerScript)));
+                
+                JPanel toolBar = new JPanel();
+                //toolBar.add(zoomInButton);
+                //toolBar.add(zoomOutButton);
+                //toolBar.add(setMarkerButton);
+                
+                JFrame frame1 = new JFrame("Google Maps");
+                frame1.add(toolBar, BorderLayout.SOUTH);
+                frame1.add(view, BorderLayout.CENTER);
+                frame1.setSize(800, 500);
+                frame1.setVisible(true);
+                
+                
+                browser.navigation().loadUrl("//Users/chaitanya/Desktop/HappyPawsAED/PetShelter/src/userinterface/UserRole/mapSeattle.html");
                 
                 
                 

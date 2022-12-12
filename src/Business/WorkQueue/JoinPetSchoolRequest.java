@@ -20,6 +20,9 @@ public class JoinPetSchoolRequest extends WorkRequest  {
     private String animalType;
     private String CourseType;
     private String username;
+    private String emailId;
+
+    
     private Pet pet;
     private Map <String, String> comments1;
 
@@ -85,6 +88,14 @@ public class JoinPetSchoolRequest extends WorkRequest  {
 
     public void setPet(Pet pet) {
         this.pet = pet;
+    }
+    
+    public String getEmailId() {
+        return emailId;
+    }
+
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
     }
 
     
